@@ -9,7 +9,7 @@
   let
     system = "x86_64-linux";  # or "aarch64-linux" if you're on ARM
     pkgs = nixpkgs.legacyPackages.${system};
-  in rec {
+  in {
     packages.${system}.default = pkgs.buildNpmPackage {
       pname = "test_buildnpmpackage";
       version = "1.0.0";
