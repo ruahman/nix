@@ -14,7 +14,24 @@
       lib = nixpkgs.lib;
 
       # Define the Go project
-      test_golang = pkgs.buildGoModule {
+      # test_golang = pkgs.buildGoModule {
+      #   pname = "test_golang";
+      #   version = "0.1.0";
+      #
+      #   src = ./.;
+      #
+      #   # Replace this with the actual hash after running `go mod vendor`
+      #   # vendorHash = lib.fakeHash;
+      #   vendorHash = "sha256-0zkcOYO72U2sLaah6OxrFgpye2VKsz1fumibLMtVsQg";
+      #
+      #   # Optional: LDFLAGS for stripping debug symbols
+      #   ldflags = [ "-s" "-w" ];
+      # };
+
+    in {
+
+      # packages.${system}.default = test_golang;
+      packages.${system}.default = pkgs.buildGoModule {
         pname = "test_golang";
         version = "0.1.0";
 
@@ -28,7 +45,6 @@
         ldflags = [ "-s" "-w" ];
       };
 
-    in {
       devShells.${system}.default = pkgs.mkShell {
         buildInputs = with pkgs; [
           go
@@ -38,13 +54,12 @@
         ];
       };
 
-      packages.${system}.default = test_golang;
 
       # apps are used to define applications that can be run directly using nix run
       # For example, if you define an app in your flake, you can execute it with nix run .#my-app.
       apps.${system}.default = {
         type = "app";
-        program = "${test_golang}/bin/test_golang";
+        program = "${self.packages.${system}.default}/bin/test_golang";
       };
     };
 }

@@ -1,2 +1,4 @@
 test_node2nix/result
 test_buildNpmPackage/result
+test_rust/result
+test_golang/result

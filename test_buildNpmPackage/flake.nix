@@ -9,9 +9,9 @@
   let
     system = "x86_64-linux";  # or "aarch64-linux" if you're on ARM
     pkgs = nixpkgs.legacyPackages.${system};
-  in {
+  in rec {
     packages.${system}.default = pkgs.buildNpmPackage {
-      pname = "my-npm-package";
+      pname = "test_buildnpmpackage";
       version = "1.0.0";
 
       src = ./.;
@@ -20,6 +20,7 @@
 
       dontNpmBuild = true;
     };
+
     devShells.${system}.default = pkgs.mkShell {
       buildInputs = [
         pkgs.nodejs
